@@ -1,0 +1,70 @@
+<html>
+
+<head>
+	
+</head>
+
+<body>
+	<h1>Hello LeapJS</h1>
+	<div id="output"></div>
+</body>
+
+
+<script src="http://js.leapmotion.com/leap-0.6.3.min.js"></script>
+<script src="http://js.leapmotion.com/leap-plugins-0.1.12.min.js"></script>
+
+<script type="text/javascript">
+	
+function concatData(id, data) {
+	return id + ":" + data + "<br/>";
+}
+
+function getFingerName(finger_id) {
+	switch(finger_id) {
+		case 0:
+			return 'Thumb';
+			break;
+		case 1:
+			return 'Index';
+			break;
+		case 2:
+			return 'Middle';
+			break;
+		case 3:
+			return 'Ring';
+			break;
+		case 4:
+			return 'Pinky';
+			break;
+
+	}
+
+}
+
+function concatJointPosition(id, position) {
+	return id + ":" + position[0] + ", " + position[1] + ", " + position[2] + "<br/>";
+}
+
+var output = document.getElementById("output");
+var frameString = "". handString = "", fingerString = "";
+var hand, finger;
+
+//Leap.loop uses browser's requestAnimationFrame
+var options = { enableGestures: true };
+
+Leap.loop({
+
+  hand: function(hand){
+    console.log( hand.screenPosition() );
+  }
+
+}).use('screenPosition');
+
+
+</script>
+
+
+
+
+
+</html>

@@ -1,0 +1,108 @@
+<html ng-app="app">
+
+<head>
+
+<style type="text/css">
+	div {
+		border: 2px solid black;
+		background-color: green;
+		width: 100px;
+		height: 100px;
+		float:left;
+		margin: 20px;
+	}
+</style>
+	
+</head>
+
+
+<body ng-controller="MainCtrl as ctrl">
+	<h1>Lenny's LeapJS</h1>
+	<!-- <div id="output"></div> -->
+
+	<div id="Thumb">1 Thumb</div>
+	<div id="Index">2 Index</div>
+	<div id="Middle">3 Middle</div>
+	<div id="Ring">4 Ring</div>
+	<div id="Pinky">5 Pinky</div>
+</body>
+
+
+<script src="http://js.leapmotion.com/leap-0.6.3.min.js"></script>
+<script src="http://js.leapmotion.com/leap-plugins-0.1.12.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"> </script>
+
+<script type="text/javascript">
+	
+function concatData(id, data) {
+	return id + ":" + data + "<br/>";
+}
+
+function getFingerName(finger_id) {
+	switch(finger_id) {
+		case 0:
+			return 'Thumb';
+			break;
+		case 1:
+			return 'Index';
+			break;
+		case 2:
+			return 'Middle';
+			break;
+		case 3:
+			return 'Ring';
+			break;
+		case 4:
+			return 'Pinky';
+			break;
+	}
+}
+
+function concatJointPosition(id, position) {
+	return id + ":" + position[0] + ", " + position[1] + ", " + position[2] + "<br/>";
+}
+
+var output = document.getElementById("output");
+var frameString = "". handString = "", fingerString = "";
+var hand, finger;
+
+//Leap.loop uses browser's requestAnimationFrame
+var options = { enableGestures: true };
+
+// Main Leap Loop
+Leap.loop(options, function(frame) {
+	frameString = concatData("frame_id", frame.id);
+	// frameString += concatData("num_hands", frame.hands.length);
+	// frameString += concatData("num_fingers", frame.fingers.length);
+	// frameString += "<br/>";
+
+
+	// loop for each hand
+	for (var i = 0, len = frame.hands.length; i < len; i++) {
+		hand = frame.hands[i];
+		for (var j = 0, len2 = hand.fingers.length; j < len2; j++) {
+			finger = hand.fingers[j];
+			fingerName = getFingerName(finger.type);
+
+			if (finger.extended) {
+				// output.innerHTML += name + " out";
+				document.getElementById(fingerName).style.backgroundColor = "red";
+			}
+			else {
+				// output.innerHTML += name + " in";
+				document.getElementById(fingerName).style.backgroundColor = "green";
+			}
+
+		}
+	}
+});
+
+
+
+</script>
+
+
+
+
+
+</html>
